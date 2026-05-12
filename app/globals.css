@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Thompson Seguros brand colors
+   Azul Principal #255F8F | Azul Escuro #1A4568 | Cyan #42B4E8
+   Azul Claro #BFDFF6 | Grafite #2C3340 | BG Soft #F7F9FC */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 19% 21%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 19% 21%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 19% 21%;
+    --primary: 207 58% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 205 76% 86%;
+    --secondary-foreground: 210 62% 25%;
+    --muted: 210 29% 97%;
+    --muted-foreground: 215 14% 52%;
+    --accent: 200 78% 58%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 207 40% 88%;
+    --input: 207 40% 88%;
+    --ring: 207 58% 35%;
+    --radius: 0.5rem;
+    --font-general-sans: 'General Sans', sans-serif;
+  }
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-inter), 'Inter', sans-serif;
+}
