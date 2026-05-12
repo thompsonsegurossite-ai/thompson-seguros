@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TiltCard } from "@/components/ui/tilt-card";
+import { TiltCard } from "@/Components/ui/tilt-card";
 
 interface ProtectItem {
   emoji: string;
