@@ -1,15 +1,15 @@
 "use client";
 
-import { Component as Hero } from "@/components/ui/the-infinite-grid";
-import { TiltCard } from "@/components/ui/tilt-card";
-import { Marquee } from "@/components/ui/marquee";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { TestimonialsColumn, type Testimonial } from "@/components/ui/testimonials-column";
-import { Cta4 } from "@/components/ui/cta4";
-import { Footer } from "@/components/ui/footer";
-import { Navbar } from "@/components/ui/navbar";
-import { SolutionsCarousel } from "@/components/ui/solutions-carousel";
-import { ContactSection } from "@/components/ui/contact-section";
+import { Component as Hero } from "@/Components/ui/the-infinite-grid";
+import { TiltCard } from "@/Components/ui/tilt-card";
+import { Marquee } from "@/Components/ui/marquee";
+import { SpotlightCard } from "@/Components/ui/spotlight-card";
+import { TestimonialsColumn, type Testimonial } from "@/Components/ui/testimonials-column";
+import { Cta4 } from "@/Components/ui/cta4";
+import { Footer } from "@/Components/ui/footer";
+import { Navbar } from "@/Components/ui/navbar";
+import { SolutionsCarousel } from "@/Components/ui/solutions-carousel";
+import { ContactSection } from "@/Components/ui/contact-section";
 import { motion } from "framer-motion";
 import { Car, Home as HomeIcon, HeartPulse, Heart, Building2 } from "lucide-react";
 

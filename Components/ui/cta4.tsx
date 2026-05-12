@@ -1,5 +1,5 @@
 import { ArrowRight, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 
 interface Cta4Props {
   title?: string;
