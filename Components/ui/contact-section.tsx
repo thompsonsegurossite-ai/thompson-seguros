@@ -10,14 +10,40 @@ export function ContactSection() {
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(
-      `Olá! Me chamo ${name}, meu email é ${email} e meu WhatsApp é ${whatsapp}. Gostaria de uma análise personalizada.`
-    );
-    window.open(`https://wa.me/5521960190289?text=${text}`, "_blank");
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, whatsapp }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.error || "Erro ao enviar solicitação");
+        setLoading(false);
+        return;
+      }
+
+      setSubmitted(true);
+      // Redirecionar para WhatsApp após sucesso
+      if (data.whatsappUrl) {
+        setTimeout(() => {
+          window.open(data.whatsappUrl, "_blank");
+        }, 1500);
+      }
+    } catch (err) {
+      setError("Erro ao enviar solicitação. Tente novamente.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -96,15 +122,20 @@ export function ContactSection() {
                   </svg>
                 </div>
                 <h3 className="font-semibold text-[#1A2D45] text-lg" style={{ fontFamily: GS }}>
-                  Mensagem enviada!
+                  Solicitação enviada!
                 </h3>
                 <p className="text-[#5A6A7A] text-sm leading-relaxed max-w-xs">
-                  Redirecionamos você para o WhatsApp. Um de nossos consultores entrará em contato
-                  em breve.
+                  Seus dados foram registrados e você receberá um email de confirmação. Um de nossos consultores entrará em contato via WhatsApp em breve.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                    {error}
+                  </div>
+                )}
+
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-medium text-[#5A6A7A]" htmlFor="contact-name">
                     Nome
@@ -116,7 +147,8 @@ export function ContactSection() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white"
+                    disabled={loading}
+                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white disabled:opacity-50"
                   />
                 </div>
 
@@ -131,7 +163,8 @@ export function ContactSection() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white"
+                    disabled={loading}
+                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white disabled:opacity-50"
                   />
                 </div>
 
@@ -146,16 +179,18 @@ export function ContactSection() {
                     required
                     value={whatsapp}
                     onChange={(e) => setWhatsapp(e.target.value)}
-                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white"
+                    disabled={loading}
+                    className="border border-[#D5E4F0] rounded-lg px-4 py-3 text-sm w-full focus:outline-none focus:border-[#255F8F] bg-white disabled:opacity-50"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="bg-[#255F8F] hover:bg-[#1A4568] text-white w-full py-3 rounded-lg font-medium text-sm transition-colors mt-1"
+                  disabled={loading}
+                  className="bg-[#255F8F] hover:bg-[#1A4568] disabled:bg-[#5A7A96] text-white w-full py-3 rounded-lg font-medium text-sm transition-colors mt-1"
                   style={{ fontFamily: GS }}
                 >
-                  Solicitar contato
+                  {loading ? "Enviando..." : "Solicitar contato"}
                 </button>
               </form>
             )}
